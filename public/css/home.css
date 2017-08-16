@@ -1,0 +1,60 @@
+*{
+    font-family: "微软雅黑";
+}
+.gray{
+    background:#EEEEEE;
+    padding: 50px 0 50px 0;
+}
+a{
+    color: #fff
+}
+a:hover{
+    color: #EEEEEE;
+}
+h1{
+    display: inline-block;
+}
+.text{
+    font-size: 20px;
+    color:#778287;
+
+}
+textarea{;
+    width:800px !important;
+    resize:none;
+    margin-bottom:15px;
+}
+.liuyankuai{
+    margin:15px 0 15px 0;
+    font-size: 14px;
+}
+.liuyankuai span{
+    font-size:20px;
+    font-weight: bold;
+}
+.left_1 h1{
+ margin-left: 20px;
+    font-size: 50px;
+}
+.right_1 label:nth-child(4){
+    margin-top: 15px;
+}
+.right_1 button{
+    margin-top:15px
+}
+.left_2{
+    margin-top: 15px;
+}
+.navbar{
+    margin-bottom:0px !important;
+}
+.setAvactor{
+    margin-top:85px
+}
+.setAvactor label{
+    display: block;
+    font-size: 15px;
+}
+.setAvactor input[type=submit]{
+    margin:15px 0 15px 0
+}

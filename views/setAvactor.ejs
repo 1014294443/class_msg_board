@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=uname%>更换头像</title>
+    <link rel="stylesheet" href="./Bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="./css/home.css">
+    <link rel="shortcut icon" href="./images/logo.jpg">
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">Web1704班级留言</a>
+            <button class="navbar-toggle collapsed" data-toggle="collapse" type="button" data-target="#navbarbox">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div id="navbarbox" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/">
+                        全部留言
+                    </a>
+                </li>
+                <li>
+                    <a href="/mymsg?uname=<%=uname%>" id="mymsg">
+                        我的留言
+                    </a>
+                </li>
+                <li>
+                    <a href="/msglist?uname=<%=uname%>">
+                        留言列表
+                    </a>
+                </li>
+            </ul>
+            <button type="button" class="navbar-btn btn btn-primary navbar-right">
+                <a href="/out">
+                    退出
+                </a>
+            </button>
+            <span href="#" class="navbar-brand navbar-right">欢迎你:<%=uname%></span>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-5 setAvactor">
+            <h1>更换头像</h1>
+            <form action="/cut" method="post" enctype="multipart/form-data">
+                <label>用户头像</label>
+                <input type="text" name="uname" value="<%=uname%>" style="display: none">
+                <input type="file" class="form-control" name="uphoto">
+                <input type="submit" value="上传" class="btn btn-default">
+            </form>
+            <p>&copy;made in 郭文强,Inc</p>
+        </div>
+    </div>
+
+<script src="./Bootstrap/js/jquery.min.js"></script>
+<script src="./Bootstrap/js/bootstrap.js"></script>
+<script src="./js/underscore-min-noconflict.js"></script>
+</body>
+</html>

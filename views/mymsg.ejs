@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=uname%>的留言</title>
+    <link rel="stylesheet" href="./Bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="./css/home.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">Web1704班级留言</a>
+            <button class="navbar-toggle collapsed" data-toggle="collapse" type="button" data-target="#navbarbox">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div id="navbarbox" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/">
+                        全部留言
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="#" id="mymsg">
+                        我的留言
+                    </a>
+                </li>
+                <li>
+                    <a href="/msglist?uname=<%=uname%>">
+                        留言列表
+                    </a>
+                </li>
+            </ul>
+            <button type="button" class="navbar-btn btn btn-primary navbar-right">
+                <a href="/out">
+                    退出
+                </a>
+            </button>
+            <span href="#" class="navbar-brand navbar-right">欢迎你:<%=uname%></span>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <img src="<%=uphoto%>" width="150" heigth="150">
+        <br>
+        <h1><%=uname%>的留言:</h1>
+        <%for(var i = 0 ; i < result.length ; i++ ){%>
+            <p><%=result[i].msg%></p>
+            <p><%=result[i].time%></p>
+            <hr>
+        <%}%>
+        <p>&copy;made in 郭文强,Inc</p>
+    </div>
+</div>
+<script src="./Bootstrap/js/jquery.min.js"></script>
+<script src="./Bootstrap/js/bootstrap.js"></script>
+<script src="./js/underscore-min-noconflict.js"></script>
+</body>
+</html>

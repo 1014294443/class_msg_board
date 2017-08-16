@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="./Bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" href="./images/logo.jpg">
+    <style>
+        a{
+            color: #fff
+        }
+        a:hover{
+            color: #EEEEEE;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">Web1704班级说说</a>
+            <button class="navbar-toggle collapsed" data-toggle="collapse" type="button" data-target="#navbarbox">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div id="navbarbox" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="#">
+                        全部说说
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        登录后查看更多哦
+                    </a>
+                </li>
+            </ul>
+            <button type="button" class="navbar-btn btn btn-success navbar-right active">
+                <a href="/login">
+                    登录
+                </a>
+            </button>
+            <button type="button" class="navbar-btn btn btn-info navbar-right">
+                <a href="/regist">
+                    注册
+                </a>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+            <h1>用户注册</h1>
+            <label>用户名</label>
+            <input type="text" placeholder="请输入用户名" id="uname" class="form-control">
+            <label>密码</label>
+            <input type="password" placeholder="至少六位" id="pwd" class="form-control">
+            <input type="checkbox"><span class="sm">遵守用户协议</span>
+            <br>
+            <button class="btn btn-success" id="login">
+                注册
+            </button>
+            <div class="hide" id="unerr">用户名已存在!请重新选用!</div>
+            <div class="hide" id="regerr">注册失败!</div>
+            <p>&copy;made in 郭文强,Inc</p>
+        </div>
+    </div>
+</div>
+</body>
+<script src="./Bootstrap/js/jquery.min.js"></script>
+<script src="./Bootstrap/js/bootstrap.js"></script>
+<script>
+    $("#login").on("click",function(){
+        $.ajax({
+            url:"/doRegist",
+            type:"get",
+            data:{
+                "uname":$("#uname").val(),
+                "pwd":$("#pwd").val()
+            },
+            success:function(result){
+                if(result=="-1"){
+                    $("#unerr").removeClass("hide");
+                    $("#regerr").addClass("hide");
+                }else if(result=="-2"){
+                    $("#regerr").removeClass("hide");
+                    $("#unerr").addClass("hide");
+                }else if(result=="1"){
+                    alert("注册成功,即将前往首页");
+                    window.location.href="/";
+                }
+            }
+        })
+    })
+</script>
+</html>

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web1704班级留言</title>
+    <link rel="stylesheet" href="./Bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="./css/home.css">
+    <link rel="shortcut icon" href="./images/logo.jpg">
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">Web1704班级留言</a>
+            <button class="navbar-toggle collapsed" data-toggle="collapse" type="button" data-target="#navbarbox">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div id="navbarbox" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="/">
+                        全部留言
+                    </a>
+                </li>
+                <%if(msg==1){%>
+                <li>
+                    <a href="#">
+                        登录后查看更多哦
+                    </a>
+                </li>
+                <%}%>
+                <%if(msg==2){%>
+                <li>
+                    <a href="/mymsg?uname=<%=uname%>&uphoto=<%=uphoto%>" id="mymsg">
+                        <%console.log(uphoto)%>
+                        我的留言
+                    </a>
+                </li>
+                <%}%>
+                <%if(msg==2){%>
+                <li>
+                    <a href="/msglist?uname=<%=uname%>">
+                        留言列表
+                    </a>
+                </li>
+                <%}%>
+            </ul>
+            <%if(msg==1){%>
+            <button type="button" class="navbar-btn btn btn-success navbar-right">
+                <a href="/login">
+                    登录
+                </a>
+            </button>
+            <button type="button" class="navbar-btn btn btn-info navbar-right">
+                <a href="/regist">
+                    注册
+                </a>
+            </button>
+            <%}%>
+            <%if(msg==2){%>
+            <button type="button" class="navbar-btn btn btn-primary navbar-right">
+                <a href="/out">
+                    退出
+                </a>
+            </button>
+            <span href="#" class="navbar-brand navbar-right">欢迎你:<%=uname%></span>
+
+            <%}%>
+        </div>
+    </div>
+</div>
+<div class="gray">
+    <div class="container">
+        <div class="row">
+            <%if(msg==1){%>
+            <div class="col-xs-6 left_1">
+                <img src="./images/a.jpg" width="150px" height="150px">
+                <h1>欢迎!</h1>
+                <p class="text">班级留言是我们交流的平台,欢迎注册登录,大家畅所欲言</p>
+                <button class="btn btn-primary">
+                    <a href="regist">注册>></a>
+                </button>
+            </div>
+            <div class="col-xs-6 right_1">
+                <p class="text">已有账号登录</p>
+                <label>用户名</label>
+                <input type="text" placeholder="请输入用户名" class="form-control" id="uname">
+                <label>密码</label>
+                <input type="text" placeholder="至少六位" class="form-control" id="pwd">
+                <button class="btn btn-success" id="login_btn">登录</button>
+                <p id="unerr" class="hide">没有此用户,请注册!</p>
+                <p id="pwderr" class="hide">密码错误</p>
+            </div>
+            <%}%>
+            <%if(msg==2){%>
+            <div class="col-xs-2 left_2">
+                <a href="/changePhoto?uname=<%=uname%>">
+                    <img src="<%=uphoto%>"  width="100px" height="100px">
+                </a>
+            </div>
+            <div class="col-xs-6">
+                <p class="text" id="uname_p"><%=uname%></p>
+                <textarea id="textarea" cols="30" rows="10" class="form-control"></textarea>
+                <button class="btn btn-success" id="insert_btn">
+                    发表留言
+                </button>
+            </div>
+            <%}%>
+        </div>
+    </div>
+</div>
+    <div class="container">
+        <div class="row">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <%for(var i=1;i<=allPage;i++){%>
+                    <li data-page="<%=i%>"><a href="#"><%=i%></a></li>
+                    <%}%>
+                </ul>
+            </nav>
+            <div id="quanbuliuyan">
+
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="./Bootstrap/js/jquery.min.js"></script>
+<script src="./Bootstrap/js/bootstrap.js"></script>
+<script src="./js/underscore-min-noconflict.js"></script>
+<script type="text/template" id="moban">
+    <div class="liuyankuai col-xs-4">
+        <img src="{{= uphoto}}" width="50px">
+        <span>{{= uname }}说:</span>
+        <p>{{= msg }}</p>
+        <p>{{= time }}</p>
+        <button class="btn btn-default">查看详细</button>
+    </div>
+</script>
+<script>
+    $("#login_btn").on("click",function(){
+        $.ajax({
+            url:"/doLogin",
+            type:"get",
+            data:{
+                "uname":$("#uname").val(),
+                "pwd":$("#pwd").val()
+            },
+            success:function(result){
+                if(result=="-1"){
+                    $("#unerr").removeClass("hide");
+                    $("#pwderr").addClass("hide");
+                }else if(result=="-2"){
+                    $("#pwderr").removeClass("hide");
+                    $("#unerr").addClass("hide");
+                }else if(result=="1"){
+                    alert("登录成功");
+                    window.location.href="/"
+                }
+            }
+        })
+    })
+    $("#insert_btn").on("click",function(){
+        $.ajax({
+            url:"/insert",
+            type:"get",
+            data:{
+                "uname":$("#uname_p").html(),
+                "msg":$("#textarea").val(),
+            },
+            success:function(result){
+                if(result=="-1"){
+                    alert("输入内容不能为空")
+                }else if(result=="1"){
+                    alert("发表成功");
+                    window.location.href=("/")
+                }else if(result=="-2"){
+                    alert("发表失败")
+                }
+            }
+        })
+    })
+
+    var currPage =1;
+    //给第一个页面，补一个active
+    $(".pagination li:first").addClass("active");
+    getDataByPage(currPage);
+    function getDataByPage(page){
+        //立刻发送读取数据请求
+        $.ajax({
+            url:"/du",
+            data:{"page":page},
+            type:"get",
+            success:function(data){
+                //写处理之前 先去app.js中处理/du请求
+                console.log("分页查询返回的数据",data);
+                //此时页面要是有个模版  直接把data的内容填充到模版就好了
+                //可以自己定义一个html的节点 然后一个个找到对应值填充的位置  也可以
+                //使用underscore.js模版 弄成模板函数
+                var compiled = _.template($("#moban").html());
+                //先清空全部留言中的所有节点
+                $("#quanbuliuyan").html("");
+                //遍历所有的返回数据  追加模版里的内容
+                for(var i=0;i<data.result.length;i++){
+                    //数据绑定 向得到的模版中填充数据
+                    var html = compiled({
+                        msg: data.result[i].msg,
+                        uname: data.result[i].uname,
+                        time: data.result[i].time,
+                        id: data.result[i]._id,
+                        uphoto:data.result[i].uphoto
+                    });
+                    $("#quanbuliuyan").append($(html));
+                }
+            }
+        })
+    }
+    //给页码添加click事件
+    $(".pagination li").on("click",function(){
+        nowpage =  parseInt($(this).attr("data-page"));
+//        alert(nowpage);
+        //重新发起请求，即可
+        getDataByPage(nowpage);
+        $(this).addClass("active").siblings().removeClass("active");
+    })
+</script>
+
+</html>
